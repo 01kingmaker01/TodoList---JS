@@ -30,23 +30,7 @@ function toUpper(str) {
   }
 }
 
-// User clicked on the add button
 // If there is any text inside the item field, add that text to the todo list
-document.getElementById('add').addEventListener('click', function () {
-  var value = document.getElementById('item').value;
-  if (value) {
-    var todoText = toUpper(value);
-    addItem(todoText);
-  }
-});
-
-document.getElementById('item').addEventListener('keydown', function (e) {
-  var value = this.value;
-  if ((e.code === 'Enter' || e.code === 'NumpadEnter') && value) {
-    var todoText = toUpper(value);
-    addItem(todoText);
-  }
-});
 
 function addItem(value) {
   addItemToDOM(value);
@@ -55,6 +39,24 @@ function addItem(value) {
   data.todo.push(value);
   dataObjectUpdated();
 }
+
+// User clicked on the add button
+document.getElementById('add').addEventListener('click', function () {
+  var value = document.getElementById('item').value;
+  if (value) {
+    var todoText = toUpper(value);
+    addItem(todoText);
+  }
+});
+
+// User clicked on the enter button
+document.getElementById('item').addEventListener('keydown', function (e) {
+  var value = this.value;
+  if ((e.code === 'Enter' || e.code === 'NumpadEnter') && value) {
+    var todoText = toUpper(value);
+    addItem(todoText);
+  }
+});
 
 function renderTodoList() {
   if (!data.todo.length && !data.completed.length) return;
@@ -69,6 +71,40 @@ function renderTodoList() {
     addItemToDOM(value, true);
   }
 }
+
+///////////////////
+
+var todoText = document.querySelector('#todoText');
+var completedText = document.querySelector('#completedText');
+
+function changeTodo() {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (this.status == 200) {
+      todoText.innerText = 'You have nothing to-do!';
+    }
+    xhr.send();
+  };
+}
+function changeTodo0() {
+  var xhr0 = new XMLHttpRequest();
+  xhr0.onload = function () {
+    console.log(this.status);
+    if (this.status == 200) {
+      todoText.innerText = 'Things to-do!';
+    }
+    xhr0.send();
+  };
+}
+
+if (!data.todo.length) {
+  changeTodo();
+}
+if (data.todo.length) {
+  changeTodo0();
+}
+
+///////////////////
 
 function dataObjectUpdated() {
   localStorage.setItem('todoList', JSON.stringify(data));
