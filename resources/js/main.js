@@ -52,7 +52,14 @@ document.getElementById('add').addEventListener('click', function () {
 // User clicked on the enter button
 document.getElementById('item').addEventListener('keydown', function (e) {
   var value = this.value;
-  if ((e.code === 'Enter' || e.code === 'NumpadEnter') && value) {
+  console.log(e);
+  if (
+    (e.code === 'Enter' ||
+      e.code === 'NumpadEnter' ||
+      e.which === 13 ||
+      e.keyCode === 13) &&
+    value
+  ) {
     var todoText = toUpper(value);
     addItem(todoText);
   }
